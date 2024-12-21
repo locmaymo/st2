@@ -73,6 +73,7 @@ import { ensureThumbnailCache } from './src/endpoints/thumbnails.js';
 
 // Routers
 import { router as usersPublicRouter } from './src/endpoints/users-public.js';
+import { router as usersProxyaiRouter } from './src/endpoints/users-proxyai.js';
 import { router as usersPrivateRouter } from './src/endpoints/users-private.js';
 import { router as usersAdminRouter } from './src/endpoints/users-admin.js';
 import { router as movingUIRouter } from './src/endpoints/moving-ui.js';
@@ -374,6 +375,9 @@ app.use(cookieSession({
 }));
 
 app.use(setUserDataMiddleware);
+
+// ProxyAI endpoints
+app.use('/api/st', usersProxyaiRouter);
 
 // CSRF Protection //
 if (!disableCsrf) {

@@ -5,7 +5,7 @@ dataRoot: ./data
 cardsCacheCapacity: 100
 # -- SERVER CONFIGURATION --
 # Listen for incoming connections
-listen: false
+listen: true
 # Enables IPv6 and/or IPv4 protocols. Need to have at least one enabled!
 protocol:
     ipv4: true
@@ -24,7 +24,7 @@ port: 8000
 autorunPortOverride: -1
 # -- SECURITY CONFIGURATION --
 # Toggle whitelist mode
-whitelistMode: true
+whitelistMode: false
 # Whitelist will also verify IP in X-Forwarded-For / X-Real-IP headers
 enableForwardedWhitelist: true
 # Whitelist of allowed IP addresses
@@ -38,7 +38,7 @@ basicAuthUser:
   username: "user"
   password: "password"
 # Enables CORS proxy middleware
-enableCorsProxy: false
+enableCorsProxy: true
 # -- REQUEST PROXY CONFIGURATION --
 requestProxy:
   # If a proxy is enabled, all outgoing HTTP/HTTPS requests will be routed through it.
@@ -50,9 +50,9 @@ requestProxy:
     - localhost
     - 127.0.0.1
 # Enable multi-user mode
-enableUserAccounts: false
+enableUserAccounts: true
 # Enable discreet login mode: hides user list on the login screen
-enableDiscreetLogin: false
+enableDiscreetLogin: true
 # Enable's authlia based auto login. Only enable this if you
 # have setup and installed Authelia as a middle-ware on your
 # reverse proxy
@@ -70,16 +70,16 @@ perUserBasicAuth: false
 ## Set to a positive number to expire session after a certain time of inactivity
 ## Set to 0 to expire session when the browser is closed
 ## Set to a negative number to disable session expiration
-sessionTimeout: 86400
+sessionTimeout: -1
 # Used to sign session cookies. Will be auto-generated if not set
 cookieSecret: ''
 # Disable CSRF protection - NOT RECOMMENDED
 disableCsrfProtection: false
 # Disable startup security checks - NOT RECOMMENDED
-securityOverride: false
+securityOverride: true
 # -- ADVANCED CONFIGURATION --
 # Open the browser automatically
-autorun: true
+autorun: false
 # Avoids using 'localhost' for autorun in auto mode.
 # use if you don't have 'localhost' in your hosts file
 avoidLocalhost: false
@@ -106,6 +106,7 @@ whitelistImportDomains:
   - cdn.discordapp.com
   - files.catbox.moe
   - raw.githubusercontent.com
+  - proxyai.me
 # API request overrides (for KoboldAI and Text Completion APIs)
 ## Note: host includes the port number if it's not the default (80 or 443)
 ## Format is an array of objects:
@@ -153,7 +154,7 @@ deepl:
 mistral:
   # Enables prefilling of the reply with the last assistant message in the prompt
   # CAUTION: The prefix is echoed into the completion. You may want to use regex to trim it out.
-  enablePrefix: false
+  enablePrefix: true
 # -- OLLAMA API CONFIGURATION --
 ollama:
   # Controls how long the model will stay loaded into memory following the request
@@ -180,3 +181,14 @@ claude:
   cachingAtDepth: -1
 # -- SERVER PLUGIN CONFIGURATION --
 enableServerPlugins: false
+
+# -- ProxyAI --
+enableServerPlugins: false
+# API key for server-to-server communication
+API_KEY: ""
+# Database connection settings
+DB_HOST: "localhost"
+DB_PORT: 3306
+DB_NAME: ""
+DB_USERNAME: ""
+DB_PASSWORD: ""

@@ -5674,6 +5674,20 @@ body:not(.movingUI) .drawer-content.maximized {
     align-self: center;
 }
 
+.youtube-embed {
+    position: relative;
+    padding-bottom: 56%;
+    width: 100%;
+    text-align: left;
+}
+  
+.youtube-embed iframe {
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    overflow: hidden;
+}
+
 @media (max-width: 768px) {
     .model-card {
         flex-direction: column;

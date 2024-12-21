@@ -6,7 +6,7 @@
     "user_avatar": "user-default.png",
     "amount_gen": 350,
     "max_context": 8192,
-    "main_api": "koboldhorde",
+    "main_api": "openai",
     "world_info_settings": {
         "world_info": {
             "globalSelect": []
@@ -84,6 +84,7 @@
         "trusted_workers_only": false
     },
     "power_user": {
+        "auto_connect": true,
         "tokenizer": 99,
         "token_padding": 64,
         "collapse_newlines": false,
@@ -195,7 +196,7 @@
         "enableLabMode": false,
         "enableZenSliders": false,
         "ui_mode": 1,
-        "forbid_external_media": true,
+        "forbid_external_media": false,
         "stscript": {
             "parser": {
                 "flags": {
@@ -206,9 +207,9 @@
         }
     },
     "extension_settings": {
-        "apiUrl": "http://localhost:5100",
-        "apiKey": "",
-        "autoConnect": false,
+        "apiUrl": "https://proxyai.me",
+        "apiKey": "sk-thay-api-key-cua-ban",
+        "autoConnect": true,
         "disabledExtensions": [],
         "expressionOverrides": [],
         "memory": {
@@ -309,10 +310,10 @@
         },
         "chromadb": {},
         "translate": {
-            "target_language": "en",
+            "target_language": "vi",
             "internal_language": "en",
             "provider": "google",
-            "auto_mode": "none"
+            "auto_mode": "responses"
         },
         "objective": {
             "customPrompts": {
@@ -460,9 +461,9 @@
         "pres_pen_openai": 0,
         "top_p_openai": 1,
         "top_k_openai": 0,
-        "stream_openai": true,
-        "openai_max_context": 4095,
-        "openai_max_tokens": 300,
+        "stream_openai": false,
+        "openai_max_context": 16000,
+        "openai_max_tokens": 500,
         "wrap_in_quotes": false,
         "prompts": [
             {
@@ -623,13 +624,26 @@
         "windowai_model": "",
         "openrouter_model": "OR_Website",
         "jailbreak_system": true,
-        "reverse_proxy": "",
+        "reverse_proxy": "https://proxyai.me",
         "chat_completion_source": "openai",
-        "max_context_unlocked": false,
+        "max_context_unlocked": true,
         "api_url_scale": "",
-        "show_external_models": false,
-        "proxy_password": "",
+        "bypass_status_check": true,
+        "show_external_models": true,
+        "proxy_password": "sk-thay-api-key-cua-ban",
         "assistant_prefill": "",
         "assistant_impersonation": ""
+    },
+    "proxies": [
+        {
+            "name": "Api của shop ProxyAI.me",
+            "url": "https://proxyai.me",
+            "password": "Thay-api-key-cua-ban"
+        }
+    ],
+    "selected_proxy": {
+        "name": "Api của shop ProxyAI.me",
+        "url": "https://proxyai.me",
+        "password": "Thay-api-key-cua-ban"
     }
 }
