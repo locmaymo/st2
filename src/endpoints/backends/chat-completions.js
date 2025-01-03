@@ -828,22 +828,30 @@ import connection from '../../DBConnection.js';
 // middleware to check request.session.handle and console.log it
 router.use((req, res, next) => {
     const handle = req.session.handle;
-    // console.log('handle:', handle);
     const now = new Date();
     now.setHours(now.getHours() + 7);
     const formattedNow = now.toISOString().slice(0, 19).replace('T', ' ');
-    // console.log('now:', formattedNow);
-    
     connection.query(
-        `SELECT * FROM sillytavern WHERE email = ? AND expiration_date < ?`,
-        [handle, formattedNow],
+        `SELECT * FROM sillytavern WHERE email = ?`,
+        [handle],
         (error, results) => {
             if (error) {
                 console.error(error);
                 return res.sendStatus(500);
             }
+            if (results.length === 0) {
+                return res.status(403).json({
+                    error: {
+                        message: '🔰 Tài Khoản SillyTavern không tồn tại.',
+                        code: 403
+                    }
+                });
+            }
+            const user = results[0];
+            const expirationDate = new Date(user.expiration_date);
             
-            if (results.length > 0) {
+            // Check if account is expired
+            if (expirationDate < now) {
                 return res.status(403).json({
                     error: {
                         message: '🔰 Tài Khoản SillyTavern đã hết thời hạn sử dụng. Vui lòng gia hạn trên web https://ProxyAI.me để tiếp tục sử dụng app SillyTavernVN',
@@ -851,8 +859,31 @@ router.use((req, res, next) => {
                     }
                 });
             }
-            
-            next();
+
+            // Calculate days remaining
+            const daysRemaining = (expirationDate - now) / (1000 * 60 * 60 * 24);
+
+            // Only renew if more than 1 day remaining
+            if (daysRemaining >= 1) {
+                const newExpirationDate = new Date(now);
+                newExpirationDate.setDate(newExpirationDate.getDate() + 30);
+                const formattedNewExpirationDate = newExpirationDate.toISOString().slice(0, 19).replace('T', ' ');
+                
+                connection.query(
+                    `UPDATE sillytavern SET expiration_date = ? WHERE email = ?`,
+                    [formattedNewExpirationDate, handle],
+                    (updateError) => {
+                        if (updateError) {
+                            console.error(updateError);
+                            return res.sendStatus(500);
+                        }
+                        next();
+                    }
+                );
+            } else {
+                // Continue without renewal if less than 1 day remaining
+                next();
+            }
         }
     );
 });
